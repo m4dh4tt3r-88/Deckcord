@@ -7,7 +7,8 @@ import { FaDiscord } from "react-icons/fa"
 interface MainMenuItemPropsBase {
     route: string
     label: ReactNode
-    onFocus: () => void
+    onFocus?: () => void
+    onGamepadFocus?: () => void
     icon?: ReactElement
     onActivate?: () => void
 }
@@ -34,7 +35,7 @@ export const patchMenu = () => {
             ret.props.children.props.children[0].type = patchedInnerMenu
         } else {
             afterPatch(ret.props.children.props.children[0], 'type', (_: any, ret: any) => {
-                const isMenuItemElt = (e: any) => e.props?.label && e.props.onFocus && e.props.route && e.type?.toString;
+                const isMenuItemElt = (e: any) => e.props?.label && (e.props.onFocus || e.props.onGamepadFocus) && e.props.route && e.type?.toString;
                 const menuItems = findInReactTree(ret, (node: any[]) => Array.isArray(node) && node.some(isMenuItemElt)) as Array<any>;
 
                 if (!menuItems) {
@@ -51,6 +52,7 @@ export const patchMenu = () => {
                         route={'/discord'}
                         label='Discord'
                         onFocus={menuItem.props.onFocus}
+                        onGamepadFocus={menuItem.props.onGamepadFocus}
                         useIconAsProp={!!menuItem.props.icon}
                         MenuItemComponent={menuItem.type}
                     />

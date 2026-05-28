@@ -7,14 +7,11 @@ export function useDeckcordState() {
   useEffect(() => {
     call("get_state").then((s) => setState(s));
 
-    addEventListener("state", (data: any) => {
-      setState(data);
-    });
+    const listener = (data: any) => setState(data);
+    addEventListener("state", listener);
 
     return () => {
-      removeEventListener("state", (data: any) => {
-        setState(data);
-      });
+      removeEventListener("state", listener);
     };
   }, []);
 
