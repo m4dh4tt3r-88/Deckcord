@@ -38,18 +38,27 @@ export function UploadScreenshot() {
         }
           
 
-        setChannel(channels[0].data);
+        if (channels.length > 0) setChannel(channels[0].data);
       });
 
     SteamClient.Screenshots.GetLastScreenshotTaken().then((res: any) => setScreenshot(res));
   }, []);
+
+  if (!screenshot?.strUrl) {
+    return (
+      <div>
+        <p style={{ fontWeight: "bold", marginBottom: "4px" }}>No screenshot found</p>
+        <p style={{ fontSize: "12px", opacity: 0.7 }}>Take a screenshot using STEAM + R1, then come back here to upload it.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
       <img
         width={240}
         height={160}
-        src={"https://steamloopback.host/" + screenshot?.strUrl}
+        src={"https://steamloopback.host/" + screenshot.strUrl}
       ></img>
       <Dropdown
         menuLabel="Last Channels"

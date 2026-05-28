@@ -94,15 +94,22 @@ const Content = () => {
         </div>
         <div style={{ marginBottom: "12px" }}>
           <PanelSectionRow>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "6px",
+                paddingLeft: "24px",
+              }}
+            >
               <PushToTalkButton />
             </div>
           </PanelSectionRow>
         </div>
-        <hr></hr>
+        <hr style={{ marginTop: "8px" }}></hr>
         <div style={{ marginBottom: "12px" }}>
           <PanelSectionRow>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <img
                 src={
                   "https://cdn.discordapp.com/avatars/" +
@@ -113,10 +120,12 @@ const Content = () => {
                 }
                 width={32}
                 height={32}
-                style={{ display: "block", borderRadius: "50%" }}
+                style={{ borderRadius: "50%" }}
               />
-              {state?.me?.username}
-            </span>
+              <span style={{ marginLeft: "8px" }}>
+                {state?.me?.username}
+              </span>
+            </div>
           </PanelSectionRow>
         </div>
         <div style={{ marginBottom: "12px" }}>
@@ -127,7 +136,10 @@ const Content = () => {
         </div>
         <hr></hr>
         <PanelSectionRow>
-          <UploadScreenshot />
+          <div style={{ marginTop: "20px", borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: "12px" }}>
+            <p style={{ fontWeight: "bold", fontSize: "11px", opacity: 0.5, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>Upload Screenshot</p>
+            <UploadScreenshot />
+          </div>
         </PanelSectionRow>
       </PanelSection>
     );
@@ -229,7 +241,7 @@ export default definePlugin(() => {
     icon: <FaDiscord />,
     onDismount() {
       unpatchMenu();
-      removeEventListener("webrtc", webrtcEventListener);
+      removeEventListener("state", webrtcEventListener);
       try {
         appLifetimeUnregister();
         settingsChangeUnregister();

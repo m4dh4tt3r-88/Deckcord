@@ -5,11 +5,15 @@ from aiohttp.web import (  # type: ignore
     AppRunner,
     TCPSite,
 )
-from asyncio import sleep, create_task, create_subprocess_exec
+from asyncio import sleep, create_task, create_subprocess_exec, get_event_loop
 import aiohttp_cors  # type: ignore
 from json import dumps
 from pathlib import Path
 from subprocess import PIPE
+import struct
+import asyncio
+import os
+import glob
 
 import sys
 
@@ -17,6 +21,31 @@ from decky import logger, DECKY_PLUGIN_DIR, emit  # type: ignore
 from logging import INFO
 
 sys.path.append(DECKY_PLUGIN_DIR)
+
+# Linux input event format: timeval(8) + type(2) + code(2) + value(4) = 24 bytes
+INPUT_EVENT_FMT = "llHHi"
+INPUT_EVENT_SIZE = struct.calcsize(INPUT_EVENT_FMT)
+EV_KEY = 1
+KEY_PRESSED = 1
+KEY_RELEASED = 0
+
+PTT_KEY_SETTING = Path("/tmp/deckcord_ptt_key")
+
+def find_nkey_device() -> str | None:
+    link = "/dev/input/by-id/usb-ASUSTeK_Computer_Inc._N-KEY_Device-event-kbd"
+    if os.path.exists(link):
+        return os.path.realpath(link)
+    # Fallback: scan for ASUS keyboard devices
+    for dev in glob.glob("/dev/input/event*"):
+        try:
+            name_path = f"/sys/class/input/{os.path.basename(dev)}/device/name"
+            with open(name_path) as f:
+                name = f.read().strip()
+            if "N-KEY" in name or "Asus" in name:
+                return dev
+        except Exception:
+            pass
+    return None
 
 from tab_utils.tab import (
     create_discord_tab,
@@ -86,10 +115,73 @@ class Plugin:
     )
     evt_handler = EventHandler()
     last_ws: WebSocketResponse = None
+    ptt_key_code: int = 0
+    _detecting_key: bool = False
+    _ptt_task = None
+
+    @classmethod
+    async def _input_reader(cls):
+        dev = find_nkey_device()
+        if not dev:
+            logger.warning("PTT: N-KEY device not found")
+            return
+        logger.info(f"PTT: monitoring {dev} for key code {cls.ptt_key_code}")
+        try:
+            with open(dev, "rb") as f:
+                while True:
+                    data = await asyncio.get_event_loop().run_in_executor(
+                        None, f.read, INPUT_EVENT_SIZE
+                    )
+                    if not data or len(data) < INPUT_EVENT_SIZE:
+                        break
+                    _, _, ev_type, code, value = struct.unpack(INPUT_EVENT_FMT, data)
+                    if ev_type != EV_KEY:
+                        continue
+                    if cls._detecting_key and value == KEY_PRESSED:
+                        cls.ptt_key_code = code
+                        PTT_KEY_SETTING.write_text(str(code))
+                        cls._detecting_key = False
+                        await emit("ptt_key_detected", code)
+                        logger.info(f"PTT: detected key code {code}")
+                    elif code == cls.ptt_key_code and cls.ptt_key_code != 0:
+                        if value in (KEY_PRESSED, KEY_RELEASED):
+                            pressed = value == KEY_PRESSED
+                            try:
+                                await cls.evt_handler.ws.send_json(
+                                    {"type": "$ptt", "value": pressed}
+                                )
+                            except Exception:
+                                pass
+        except Exception as e:
+            logger.error(f"PTT input reader error: {e}")
+
+    @classmethod
+    async def start_ptt_key_detect(cls):
+        cls._detecting_key = True
+        logger.info("PTT: detect mode ON — press your back button")
+        return True
+
+    @classmethod
+    async def stop_ptt_key_detect(cls):
+        cls._detecting_key = False
+        return True
+
+    @classmethod
+    async def get_ptt_key_code(cls):
+        return cls.ptt_key_code
 
     @classmethod
     async def _main(cls):
         logger.info("Starting Deckcord backend")
+        # Load saved PTT key code
+        if PTT_KEY_SETTING.exists():
+            try:
+                cls.ptt_key_code = int(PTT_KEY_SETTING.read_text().strip())
+                logger.info(f"PTT: loaded key code {cls.ptt_key_code}")
+            except Exception:
+                pass
+        # Start input device reader
+        cls._ptt_task = create_task(cls._input_reader())
         await initialize()
         logger.info("Discord initialized")
 

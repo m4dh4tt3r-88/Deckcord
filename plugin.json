@@ -2,7 +2,7 @@
   "name": "Deckcord",
   "author": "marios8543",
   "api_version": 1,
-  "flags": [],
+  "flags": ["root"],
   "publish": {
     "tags": ["discord", "chat"],
     "description": "Easy access to Discord",
