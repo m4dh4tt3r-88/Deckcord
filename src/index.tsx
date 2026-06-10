@@ -26,6 +26,7 @@ import {
   VoiceChatMembers,
 } from "./components/VoiceChatViews";
 import { UploadScreenshot } from "./components/UploadScreenshot";
+import { OpenDiscordButton } from "./components/buttons/OpenCloseDiscordButton";
 import {
   call,
   routerHook,
@@ -77,28 +78,31 @@ const Content = () => {
   } else {
     return (
       <PanelSection>
-        <PanelSectionRow>
-          <Focusable style={{ display: "flex", justifyContent: "center" }}>
-            <MuteButton />
-            <DeafenButton />
-            <DisconnectButton />
-          </Focusable>
-        </PanelSectionRow>
-        <PanelSectionRow>
-          <div
-            style={{
-              marginTop: "-8px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <PushToTalkButton />
-          </div>
-        </PanelSectionRow>
+        <div style={{ marginBottom: "12px" }}>
+          <PanelSectionRow>
+            <OpenDiscordButton />
+          </PanelSectionRow>
+        </div>
+        <div style={{ marginBottom: "12px" }}>
+          <PanelSectionRow>
+            <Focusable style={{ display: "flex", justifyContent: "center" }}>
+              <MuteButton />
+              <DeafenButton />
+              <DisconnectButton />
+            </Focusable>
+          </PanelSectionRow>
+        </div>
+        <div style={{ marginBottom: "12px" }}>
+          <PanelSectionRow>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <PushToTalkButton />
+            </div>
+          </PanelSectionRow>
+        </div>
         <hr></hr>
-        <PanelSectionRow>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span style={{ marginTop: "-10px" }}>
+        <div style={{ marginBottom: "12px" }}>
+          <PanelSectionRow>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
               <img
                 src={
                   "https://cdn.discordapp.com/avatars/" +
@@ -109,15 +113,18 @@ const Content = () => {
                 }
                 width={32}
                 height={32}
+                style={{ display: "block", borderRadius: "50%" }}
               />
               {state?.me?.username}
             </span>
-          </div>
-        </PanelSectionRow>
-        <PanelSectionRow>
-          <VoiceChatChannel />
-          <VoiceChatMembers />
-        </PanelSectionRow>
+          </PanelSectionRow>
+        </div>
+        <div style={{ marginBottom: "12px" }}>
+          <PanelSectionRow>
+            <VoiceChatChannel />
+            <VoiceChatMembers />
+          </PanelSectionRow>
+        </div>
         <hr></hr>
         <PanelSectionRow>
           <UploadScreenshot />
