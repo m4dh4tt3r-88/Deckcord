@@ -1,11 +1,11 @@
 {
-  "name": "Deckcord",
-  "author": "marios8543",
+  "name": "SteamCord",
+  "author": "m4dh4tt3r-88",
   "api_version": 1,
   "flags": [],
   "publish": {
-    "tags": ["discord", "chat"],
-    "description": "Easy access to Discord",
+    "tags": ["discord", "chat", "voice"],
+    "description": "Discord in Steam game mode — voice, PTT, and menu integration for Steam Deck and SteamOS devices",
     "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
   }
 }

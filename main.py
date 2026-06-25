@@ -17,6 +17,7 @@ from decky import logger, DECKY_PLUGIN_DIR, emit  # type: ignore
 from logging import INFO
 
 sys.path.append(DECKY_PLUGIN_DIR)
+sys.path.append(str(Path(DECKY_PLUGIN_DIR) / "defaults"))
 
 from tab_utils.tab import (
     create_discord_tab,
@@ -113,7 +114,7 @@ class Plugin:
 
         cls.webrtc_server = await create_subprocess_exec(
             "/usr/bin/python",
-            str(Path(DECKY_PLUGIN_DIR) / "gst_webrtc.py"),
+            str(Path(DECKY_PLUGIN_DIR) / "defaults" / "gst_webrtc.py"),
             env={
                 "LD_LIBRARY_PATH": str(Path(DECKY_PLUGIN_DIR) / "bin"),
                 "GI_TYPELIB_PATH": str(Path(DECKY_PLUGIN_DIR) / "bin/girepository-1.0"),
@@ -210,7 +211,7 @@ class Plugin:
         if r:
             return True
 
-        payload = dumps({"title": "Deckcord", "body": "Error while posting screenshot"})
+        payload = dumps({"title": "SteamCord", "body": "Error while posting screenshot"})
         await cls.shared_js_tab.ensure_open()
         await cls.shared_js_tab.evaluate(
             f"DeckyPluginLoader.toaster.toast(JSON.parse('{payload}'));"

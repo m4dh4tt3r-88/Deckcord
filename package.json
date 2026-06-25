@@ -1,8 +1,8 @@
 {
-  "name": "deckcord",
-  "version": "0.3.5",
+  "name": "steamcord",
+  "version": "0.3.6",
   "type": "module",
-  "description": "Easy access to discord in game mode, and related functionalities",
+  "description": "Discord in Steam game mode — voice, PTT, and menu integration for Steam Deck and SteamOS devices",
   "scripts": {
     "build": "shx rm -rf dist && rollup -c",
     "build_norm": "rollup -c",
@@ -18,12 +18,12 @@
     "plugin",
     "steam-deck"
   ],
-  "author": "marios8543",
+  "author": "m4dh4tt3r-88",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/marios8543/Deckcord/issues"
+    "url": "https://github.com/m4dh4tt3r-88/Deckcord/issues"
   },
-  "homepage": "https://github.com/marios8543/Deckcord#readme",
+  "homepage": "https://github.com/m4dh4tt3r-88/Deckcord#readme",
   "devDependencies": {
     "@decky/rollup": "^1.0.2",
     "@types/react": "18.3.3",

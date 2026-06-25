@@ -236,7 +236,7 @@ export default definePlugin(() => {
   });
 
   return {
-    title: <div className={staticClasses.Title}>Deckcord</div>,
+    title: <div className={staticClasses.Title}>SteamCord</div>,
     content: <Content />,
     icon: <FaDiscord />,
     onDismount() {
