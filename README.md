@@ -1,5 +1,5 @@
-# SteamCord
-## Discord in Steam game mode — for Steam Deck and SteamOS devices
+# TacCord
+## Tactical Discord Comms for SteamOS
 
 A maintained fork of [Deckcord](https://github.com/marios8543/Deckcord) with bug fixes and cross-device compatibility.
 
@@ -28,8 +28,7 @@ A maintained fork of [Deckcord](https://github.com/marios8543/Deckcord) with bug
 3. Enter the install URL in *Install Plugin from URL* and press install.
 
 ## Credits
-- Original plugin by [@marios8543](https://github.com/marios8543) — SteamCord is a fork of [Deckcord](https://github.com/marios8543/Deckcord).
+- Original plugin by [@marios8543](https://github.com/marios8543) — TacCord is a fork of [Deckcord](https://github.com/marios8543/Deckcord).
 - Huge thanks to [@aagaming](https://github.com/AAGaming00) for his enormous contributions towards getting mic working on the SteamClient tab, as well as his general support throughout the development of this plugin.
 - Huge thanks to [@Epictek](https://github.com/Epictek) for his help in getting QR Code login working.
-
 - Huge thanks to [@jessebofill](https://github.com/jessebofill) for the menu patching code.

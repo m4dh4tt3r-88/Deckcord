@@ -12,8 +12,8 @@ export const DiscordTab = () => {
             }
             else {
                 toaster.toast({
-                    title: "SteamCord",
-                    body: "SteamCord has not loaded yet!"
+                    title: "TacCord",
+                    body: "TacCord comms offline!"
                 });
                 Router.Navigate("/library/home");
             }

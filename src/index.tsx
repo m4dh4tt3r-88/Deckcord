@@ -7,7 +7,7 @@ import {
   sleep,
   Focusable,
 } from "@decky/ui";
-import { FaDiscord } from "react-icons/fa";
+import { GiWalkieTalkie } from "react-icons/gi";
 
 import { patchMenu } from "./patches/menuPatch";
 import { DiscordTab } from "./components/DiscordTab";
@@ -50,7 +50,7 @@ const Content = () => {
   if (!state?.loaded) {
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <h2>Initializing...</h2>
+        <h2>TacCord loading...</h2>
       </div>
     );
   } else if (!state?.logged_in) {
@@ -67,8 +67,8 @@ const Content = () => {
         <h3>
           Open{" "}
           <b>
-            <FaDiscord />
-            Discord
+            <GiWalkieTalkie />
+            TacCord
           </b>{" "}
           from the Steam Menu and login.
         </h3>
@@ -137,7 +137,7 @@ const Content = () => {
         <hr></hr>
         <PanelSectionRow>
           <div style={{ marginTop: "20px", borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: "12px" }}>
-            <p style={{ fontWeight: "bold", fontSize: "11px", opacity: 0.5, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>Upload Screenshot</p>
+            <p style={{ fontWeight: "bold", fontSize: "11px", opacity: 0.5, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>Mission Report</p>
             <UploadScreenshot />
           </div>
         </PanelSectionRow>
@@ -236,9 +236,9 @@ export default definePlugin(() => {
   });
 
   return {
-    title: <div className={staticClasses.Title}>SteamCord</div>,
+    title: <div className={staticClasses.Title}>TacCord</div>,
     content: <Content />,
-    icon: <FaDiscord />,
+    icon: <GiWalkieTalkie />,
     onDismount() {
       unpatchMenu();
       removeEventListener("state", webrtcEventListener);

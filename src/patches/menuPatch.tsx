@@ -2,7 +2,7 @@
 
 import { afterPatch, Dropdown, findInReactTree, FooterLegendProps, getReactRoot } from "@decky/ui"
 import { FC, ReactElement, ReactNode } from "react"
-import { FaDiscord } from "react-icons/fa"
+import { GiWalkieTalkie } from "react-icons/gi"
 
 interface MainMenuItemPropsBase {
     route: string
@@ -50,7 +50,7 @@ export const patchMenu = () => {
                     <MenuItemWrapper
                         key={'deckcord'}
                         route={'/discord'}
-                        label='Discord'
+                        label='TacCord'
                         onFocus={menuItem.props.onFocus}
                         onGamepadFocus={menuItem.props.onGamepadFocus}
                         useIconAsProp={!!menuItem.props.icon}
@@ -109,12 +109,12 @@ const MenuItemWrapper: FC<MenuItemWrapperProps> = ({ MenuItemComponent, label, u
         }
     });
 
-    (props as any)[useIconAsProp ? 'icon' : 'children'] = <FaDiscord />;
+    (props as any)[useIconAsProp ? 'icon' : 'children'] = <GiWalkieTalkie />;
 
     return (
         <MenuItemComponent
             {...props}
-            label={'Discord'}
+            label={'TacCord'}
             onSecondaryActionDescription={"Change Position"}
             onSecondaryButton={(_) => choosePosition.ShowMenu()}
         />

@@ -1,11 +1,11 @@
 import { DialogButton, Router } from "@decky/ui";
-import { FaDiscord } from "react-icons/fa";
+import { GiWalkieTalkie } from "react-icons/gi";
 
 export function OpenDiscordButton() {
   return (
     <DialogButton onClick={() => Router.Navigate("/discord")} style={{ width: "100%" }}>
-      <FaDiscord style={{ marginRight: "6px" }} />
-      Open Discord
+      <GiWalkieTalkie style={{ marginRight: "6px" }} />
+      Open TacCord
     </DialogButton>
   );
 }

@@ -1,8 +1,8 @@
 {
-  "name": "steamcord",
+  "name": "taccord",
   "version": "0.3.6",
   "type": "module",
-  "description": "Discord in Steam game mode — voice, PTT, and menu integration for Steam Deck and SteamOS devices",
+  "description": "TacCord — Tactical Discord Comms for SteamOS. Voice, PTT, and menu integration for Steam Deck and SteamOS devices.",
   "scripts": {
     "build": "shx rm -rf dist && rollup -c",
     "build_norm": "rollup -c",
